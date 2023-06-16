@@ -7,17 +7,17 @@ import DeleteBlock from './DeleteBlock';
 
 
 
-const TicketCard = () => {
+const TicketCard = ({ color, ticket }) => {
   return (
     <div className="ticket-card">
-      <Link>
+      {/* <Link> */}
         <div className="ticket-color"></div>
-        <h3>title</h3>
+        <h3>{ticket.title}</h3>
         <AvatarDisplay />
         <StatusDisplay />
         <PriorityDisplay />
         <ProgressDisplay />
-      </Link>
+      {/* </Link> */}
       <DeleteBlock />
     </div>
   )
