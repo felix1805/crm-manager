@@ -21,8 +21,8 @@ const Dashboard = () => {
       owner: 'Felix Petzsche',
       avatar: 'https://avatars.githubusercontent.com/u/1591804?v=4',
       status: 'stuck',
-      priority: 8,
-      progress: 0,
+      priority: 1,
+      progress: 90,
       description: 'Create a react project guide for new apps to be developed.',
       timestamp: '2023-06-19T13:32:14-0400'
     },
