@@ -1,44 +1,35 @@
+import { useState, useEffect, useContext } from "react";
 import TicketCard from "../components/TicketCard";
+import axios from "axios";
+import CategoriesContext from "../context";
 
 const Dashboard = () => {
-  const tickets = [
-    {
-      category: 'Q1 2023',
-      color: 'blue',
-      title: 'Study Progress so far',
-      owner: 'Felix Petzsche',
-      avatar: 'https://avatars.githubusercontent.com/u/1591804?v=4',
-      status: 'working on it',
-      priority: 5,
-      progress: 40,
-      description: 'Keep track of coding study progress in 2023 so far.',
-      timestamp: '2023-06-16T16:27:45-0400'
-    },
-    {
-      category: 'Q2 2023',
-      color: 'purple',
-      title: 'React project Guide',
-      owner: 'Felix Petzsche',
-      avatar: 'https://avatars.githubusercontent.com/u/1591804?v=4',
-      status: 'stuck',
-      priority: 1,
-      progress: 90,
-      description: 'Create a react project guide for new apps to be developed.',
-      timestamp: '2023-06-19T13:32:14-0400'
-    },
-    {
-      category: 'Q1 2023',
-      color: 'blue',
-      title: 'Completed Projects this Year',
-      owner: 'Felix Petzsche',
-      avatar: 'https://avatars.githubusercontent.com/u/1591804?v=4',
-      status: 'working on it',
-      priority: 3,
-      progress: 20,
-      description: 'Tracking record of completed projects this year so far',
-      timestamp: '2023-06-14T13:57:26-0400'
-    }
-  ]
+  const [tickets, setTickets] = useState(null)
+  const {categories, setCategories} = useContext(CategoriesContext)
+
+  useEffect(() => {
+    const fetchData = async() => {
+    const response = await axios.get('http://localhost:8000/tickets')
+
+    const dataObject = response.data.data
+
+    const arrayOfKeys = Object.keys(dataObject)
+    const arrayOfData = Object.keys(dataObject).map((key) => dataObject[key])
+    const formattedArray = []
+    arrayOfKeys.forEach((key, index) => {
+      const formattedData = { ...arrayOfData[index] }
+      formattedData['documentId'] = key
+      formattedArray.push(formattedData)
+    })
+    setTickets(formattedArray)}
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    setCategories([...new Set(tickets?.map(({category}) => category))])
+  }, [tickets])
+
+  console.log(categories)
 
   const colors = [
     'rgb(255, 179, 189)',
@@ -51,7 +42,6 @@ const Dashboard = () => {
     ...new Set(tickets?.map(({ category }) => category))
   ]
 
-  console.log(uniqueCategories)
 
   return (
     <div className="dashboard">
@@ -79,3 +69,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
