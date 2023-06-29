@@ -23,11 +23,10 @@ const App = () => {
               path='/ticket'
               element={<TicketPage />}
             ></Route>
-            <Route
-              path='/ticket/:id'
-              element={<TicketPage />}
-              editMode={true}
-            ></Route>
+            <Route 
+            path="/ticket/:id" 
+            element={<TicketPage 
+            editMode={true} />} />
           </Routes>
         </BrowserRouter>
       </CategoriesContext.Provider>
